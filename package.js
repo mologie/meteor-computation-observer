@@ -11,3 +11,8 @@ Package.onUse(function(api) {
 	api.addFiles('computation-observer.coffee', 'client');
 	api.export('ComputationObserver', 'client');
 });
+
+Package.onTest(function(api) {
+	api.use(['mologie:computation-observer', 'coffeescript', 'reactive-var', 'tinytest']);
+	api.addFiles('computation-observer-tests.coffee');
+});
