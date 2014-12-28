@@ -11,8 +11,12 @@ class ComputationObserver
 		@_provider = options.computation
 		@_valueField = options.valueField
 		@_events = options.events
+		@_started = false
 	
 	start: ->
+		if @_started
+			return
+		@_started = true
 		if typeof @_provider is "function"
 			# Reactive data source
 			@_computation = Tracker.autorun => @_takeSnapshot()
@@ -24,12 +28,18 @@ class ComputationObserver
 			throw new Error "computation must be either an array or a function returning an array"
 	
 	stop: ->
+		if not @_started
+			return
+		@_started = false
 		if @_computation?
 			@_computation.stop()
 			delete @_computation
 		if @_liveQuery?
 			@_liveQuery.stop()
 			delete @_liveQuery
+	
+	reset: ->
+		@stop()
 		delete @_previousSnapshot
 		delete @_snapshot
 	

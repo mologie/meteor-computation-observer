@@ -270,3 +270,50 @@ if Meteor.isClient
 		lg.expectChanged {name: 'b', _id: id1}, {name: 'b'}
 		lg.expectRemoved {name: 'a'}
 		lg.assert()
+	
+	# Test start/stop/start
+	Tinytest.add "ComputationObserver start/stop/start", (test) ->
+		rv = new ReactiveVar [{v: 'first'}]
+		lg = new EventLogger test
+		co = new ComputationObserver
+			computation: -> rv.get()
+			valueField: "v"
+			events: lg.eventMap()
+		co.start()
+		
+		lg.expectAdded {v: 'first'}
+		lg.assert()
+		
+		co.stop()
+		
+		rv.set [{v: 'a'}, {v: 'b'}]
+		Tracker.flush()
+		
+		rv.set [{v: 'a'}]
+		Tracker.flush()
+		
+		co.start()
+		
+		lg.expectAdded {v: 'a'}
+		lg.expectRemoved {v: 'first'}
+		lg.assert()
+
+	# Test start/reset/start
+	Tinytest.add "ComputationObserver start/reset/start", (test) ->
+		lg = new EventLogger test
+		co = new ComputationObserver
+			computation: -> [{v: 'first'}, {v: 'second'}]
+			valueField: "v"
+			events: lg.eventMap()
+		co.start()
+		
+		lg.expectAdded {v: 'first'}
+		lg.expectAdded {v: 'second'}
+		lg.assert()
+		
+		co.reset()
+		co.start()
+		
+		lg.expectAdded {v: 'first'}
+		lg.expectAdded {v: 'second'}
+		lg.assert()
