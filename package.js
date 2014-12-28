@@ -1,7 +1,7 @@
 Package.describe({
 	name:    'mologie:computation-observer',
 	summary: 'LiveQuery for arbitrary reactive computations',
-	version: '1.0.0',
+	version: '1.0.1',
 	git:     'https://github.com/mologie/meteor-computation-observer'
 });
 
