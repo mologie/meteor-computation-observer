@@ -1,11 +1,11 @@
 computation-observer
 ====================
 
-This package provides the class `ComputationObserver`, which accepts a function
-and returns a stream of incremental changes, just like LiveQuery. Its only
-limitation is that, like with LiveQuery, all documents must have a unique and
-static identifying property. Should the given function return a Mongo.Cursor,
-`ComputationObserver` will automatically use the cursor's `observe` function.
+This package provides the class `ComputationObserver`, which accepts a reactive
+function and returns a stream of incremental changes, just like LiveQuery. Its
+only limitation is that all documents must have a unique and static identifying
+property. Should the given function return a Mongo.Cursor, `ComputationObserver`
+will automatically use the cursor's `observe` function.
 
 Because this package depends on Meteor's Tracker, `ComputationObserver` is
 available exclusively on the client.
