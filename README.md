@@ -128,8 +128,8 @@ Caveats
 * You can pass an array through the `computation` setting, but this does not get
   you any reactive behavior. This turned out to be a common typo when using
   CoffeeScript.
-* When the value field is missing from any document returned by its function,
-  `ComputationObserver` will throw an exception.
+* When the value field is missing from any document returned by
+  `ComputationObserver`'s function, an exception will be thrown.
 
 License
 -------
